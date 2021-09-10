@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,6 +17,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText cuatroText;
     private Button pingBtn;
     private Button hostBtn;
+    private TextView leerIP;
+    private int uno;
+
 
 
     @Override
@@ -32,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         pingBtn = findViewById(R.id.pingBtn);
         hostBtn = findViewById(R.id.hostBtn);
 
+        leerIP = findViewById(R.id.leerIP);
+
 
         pingBtn.setOnClickListener((view)->{
 
@@ -42,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
             String cuatro= cuatroText.getText().toString();
 
             Intent ipIntent = new Intent(this,LecturaIP.class);
+           // LecturaIP.putExtra("uno", uno);
             startActivity(ipIntent);
 
             //limpiar campo de texto
@@ -49,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             dosText.getText().clear();
             tresText.getText().clear();
             cuatroText.getText().clear();
-        
+
 
            // overridePendingTransition(R.anim.animacion1,R.anim.animacion2);
         });
