@@ -12,7 +12,10 @@ public class LecturaIP extends AppCompatActivity {
 
     private TextView pingText;
     private Button regresarBtn1;
-    private int uno;
+    private String IP;
+    private String texto;
+
+
 
 
     @Override
@@ -25,6 +28,10 @@ public class LecturaIP extends AppCompatActivity {
 
 
      //  uno = getIntent().getExtras().getInt("uno");
+
+        texto = " ";
+        pingText= findViewById(R.id.pingText);
+        IP= getIntent().getExtras().getString("IP");
 
         regresarBtn1.setOnClickListener((view)->{
             Intent mainIntent = new Intent(this,MainActivity.class);
