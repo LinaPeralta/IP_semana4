@@ -18,7 +18,7 @@ public class HostActivity extends AppCompatActivity {
     private TextView hostText;
     private Button regresarBtn2;
     private String hosts;
-    private String textoHost;
+    private String texto;
     private String host1,host2,host3,host4;
 
     @Override
@@ -26,6 +26,7 @@ public class HostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host);
 
+        texto=" ";
         regresarBtn2=  findViewById(R.id.regresarBtn2);
         hostText = findViewById(R.id.hostText);
 
@@ -37,18 +38,25 @@ public class HostActivity extends AppCompatActivity {
         host2= hostDos.getStringExtra("host2");
         host3= hostTres.getStringExtra("host3");
 
-         new Thread(()->{
-             for (int n = 0; n < 255; n++) {
+        regresarBtn2.setOnClickListener((view)->{
+            Intent mainIntent = new Intent(this,MainActivity.class);
+            startActivity(mainIntent);
 
-                 hosts =host1+"."+host2+"."+host3+"."+n;
+            // overridePendingTransition(R.anim.animacion1,R.anim.animacion2);
+        });
+
+         new Thread(()->{
+             for (int i = 0; i < 255; i++) {
+
+                 hosts =host1+"."+host2+"."+host3+"."+i;
                  try {
 
                      InetAddress hostIp = InetAddress.getByName(hosts);
-                     if (hostIp.isReachable(3000)) {
-                         textoHost += hostIp +"\n";
+                     if (hostIp.isReachable(100)) {
+                         texto += hostIp +"\n";
                      }
                      runOnUiThread(() -> {
-                                 hostText.setText(textoHost);
+                                 hostText.setText(texto);
                              }
                      );
                  } catch (UnknownHostException e) {
@@ -60,12 +68,6 @@ public class HostActivity extends AppCompatActivity {
 
          }).start();
 
-        regresarBtn2.setOnClickListener((view)->{
-            Intent mainIntent = new Intent(this,MainActivity.class);
-            startActivity(mainIntent);
-
-            // overridePendingTransition(R.anim.animacion1,R.anim.animacion2);
-        });
 
     }
 }
