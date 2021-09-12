@@ -8,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -18,7 +21,9 @@ public class MainActivity extends AppCompatActivity {
     private Button pingBtn;
     private Button hostBtn;
     private TextView leerIP;
-    private int uno;
+    private int uno,dos,tres,cuatro;
+    private String host1,host2,host3,host4;
+    private String IP;
 
 
 
@@ -39,16 +44,21 @@ public class MainActivity extends AppCompatActivity {
         leerIP = findViewById(R.id.leerIP);
 
 
+        //PANTALLA PING
         pingBtn.setOnClickListener((view)->{
 
             //caracteres IP
-            String uno = unoText.getText().toString();
-            String dos = dosText.getText().toString();
-            String tres = tresText.getText().toString();
-            String cuatro= cuatroText.getText().toString();
+            uno = Integer.parseInt(unoText.getText().toString());
+            dos = Integer.parseInt(dosText.getText().toString());
+            tres = Integer.parseInt(tresText.getText().toString());
+            cuatro= Integer.parseInt(cuatroText.getText().toString());
+
+
+            IP= uno+"."+dos+"."+tres+"."+cuatro;
+            //ping(ip);
 
             Intent ipIntent = new Intent(this,LecturaIP.class);
-           // LecturaIP.putExtra("uno", uno);
+            ipIntent.putExtra("IP", IP);
             startActivity(ipIntent);
 
             //limpiar campo de texto
@@ -57,12 +67,39 @@ public class MainActivity extends AppCompatActivity {
             tresText.getText().clear();
             cuatroText.getText().clear();
 
-
            // overridePendingTransition(R.anim.animacion1,R.anim.animacion2);
         });
 
+      new Thread(()->{
+
+          try{
+              InetAddress IPlocal = InetAddress.getLocalHost();
+              runOnUiThread(()-> leerIP.setText(IPlocal.getHostAddress()));
+
+          }catch (UnknownHostException e){
+              e.printStackTrace();
+          }
+
+      }).start();
+
+
+        //PANTALLA HOST
         hostBtn.setOnClickListener((view)->{
+
+
+            uno = Integer.parseInt(unoText.getText().toString());
+            dos = Integer.parseInt(dosText.getText().toString());
+            tres = Integer.parseInt(tresText.getText().toString());
+            cuatro= Integer.parseInt(cuatroText.getText().toString());
+
+
             Intent hostIntent = new Intent(this,HostActivity.class);
+
+            hostIntent.putExtra("host1", host1);
+            hostIntent.putExtra("host2", host2);
+            hostIntent.putExtra("host3", host3);
+           // hostIntent.putExtra("host4", host4);
+
             startActivity(hostIntent);
 
             // overridePendingTransition(R.anim.animacion1,R.anim.animacion2);

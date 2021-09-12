@@ -24,7 +24,7 @@ public class LecturaIP extends AppCompatActivity {
         pingText = findViewById(R.id.pingText);
 
 
-       uno = getIntent().getExtras().getInt("uno");
+     //  uno = getIntent().getExtras().getInt("uno");
 
         regresarBtn1.setOnClickListener((view)->{
             Intent mainIntent = new Intent(this,MainActivity.class);
