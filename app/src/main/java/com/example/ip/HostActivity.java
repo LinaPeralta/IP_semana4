@@ -8,12 +8,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public class HostActivity extends AppCompatActivity {
 
 
     private TextView hostText;
     private Button regresarBtn2;
     private String hosts;
+    private String texto;
     private String host1,host2,host3,host4;
 
     @Override
@@ -32,10 +37,28 @@ public class HostActivity extends AppCompatActivity {
         host2= hostDos.getStringExtra("host2");
         host3= hostTres.getStringExtra("host3");
 
+         new Thread(()->{
+             for (int n = 0; n < 255; n++) {
 
+                 hosts =host1+"."+host2+"."+host3+"."+n;
+                 try {
 
+                     InetAddress hostIp = InetAddress.getByName(hosts);
+                     if (hostIp.isReachable(100)) {
+                         texto += hostIp +"\n";
+                     }
+                     runOnUiThread(() -> {
+                                 hostText.setText(texto);
+                             }
+                     );
+                 } catch (UnknownHostException e) {
+                     e.printStackTrace();
+                 } catch (IOException e) {
+                     e.printStackTrace();
+                 }
+             }
 
-
+         }).start();
 
         regresarBtn2.setOnClickListener((view)->{
             Intent mainIntent = new Intent(this,MainActivity.class);
@@ -43,5 +66,6 @@ public class HostActivity extends AppCompatActivity {
 
             // overridePendingTransition(R.anim.animacion1,R.anim.animacion2);
         });
+
     }
 }

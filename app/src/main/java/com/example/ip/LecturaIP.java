@@ -8,14 +8,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public class LecturaIP extends AppCompatActivity {
 
     private TextView pingText;
     private Button regresarBtn1;
     private String IP;
     private String texto;
-
-
 
 
     @Override
@@ -27,11 +29,38 @@ public class LecturaIP extends AppCompatActivity {
         pingText = findViewById(R.id.pingText);
 
 
-     //  uno = getIntent().getExtras().getInt("uno");
-
         texto = " ";
         pingText= findViewById(R.id.pingText);
         IP= getIntent().getExtras().getString("IP");
+
+
+        new Thread(() -> {
+
+
+            for (int m = 0; m < 5; m++) {
+
+                try {
+                    InetAddress searchIp = InetAddress.getByName(IP);
+
+                    if (searchIp.isReachable(100)) {
+                        texto += "RECIBIDO\n";
+                        pingText.setText(texto);
+                    } else {
+                        texto += "PERDIDO\n";
+                        pingText.setText(texto);
+                    }
+                    runOnUiThread(() -> {
+                        pingText.setText(texto);
+                    });
+
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
 
         regresarBtn1.setOnClickListener((view)->{
             Intent mainIntent = new Intent(this,MainActivity.class);
@@ -39,5 +68,6 @@ public class LecturaIP extends AppCompatActivity {
 
             // overridePendingTransition(R.anim.animacion1,R.anim.animacion2);
         });
+
     }
 }
