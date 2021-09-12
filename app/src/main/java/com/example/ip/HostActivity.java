@@ -18,7 +18,7 @@ public class HostActivity extends AppCompatActivity {
     private TextView hostText;
     private Button regresarBtn2;
     private String hosts;
-    private String texto;
+    private String textoHost;
     private String host1,host2,host3,host4;
 
     @Override
@@ -31,7 +31,7 @@ public class HostActivity extends AppCompatActivity {
 
         Intent hostUno =getIntent();
         Intent hostDos =getIntent();
-        Intent hostTres =getIntent();
+        Intent hostTres=getIntent();
 
         host1= hostUno.getStringExtra("host1");
         host2= hostDos.getStringExtra("host2");
@@ -44,11 +44,11 @@ public class HostActivity extends AppCompatActivity {
                  try {
 
                      InetAddress hostIp = InetAddress.getByName(hosts);
-                     if (hostIp.isReachable(100)) {
-                         texto += hostIp +"\n";
+                     if (hostIp.isReachable(3000)) {
+                         textoHost += hostIp +"\n";
                      }
                      runOnUiThread(() -> {
-                                 hostText.setText(texto);
+                                 hostText.setText(textoHost);
                              }
                      );
                  } catch (UnknownHostException e) {

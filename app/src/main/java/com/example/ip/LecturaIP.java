@@ -42,7 +42,7 @@ public class LecturaIP extends AppCompatActivity {
                 try {
                     InetAddress searchIp = InetAddress.getByName(IP);
 
-                    if (searchIp.isReachable(100)) {
+                    if (searchIp.isReachable(1000)) {
                         texto += "RECIBIDO\n";
                         pingText.setText(texto);
                     } else {
